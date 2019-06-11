@@ -1,6 +1,6 @@
 # Terraform provider test
 
-This repo aim to trigger a warning on terraform 0.12.1.
+This repo aim to trigger a warning i should not get on terraform 0.12.1.
 
 ### Step to reproduce
 ```
