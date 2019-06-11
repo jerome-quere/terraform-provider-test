@@ -25,8 +25,7 @@ func TestAccTestServer(t *testing.T) {
 			{
 				Config: TestAccTestServerStep2,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(
-						"test_server.base", "address", ""),
+					resource.TestCheckResourceAttr("test_server.base", "address", ""),
 				),
 			},
 		},

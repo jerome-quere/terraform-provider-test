@@ -23,7 +23,7 @@ func resourceServer() *schema.Resource {
 }
 
 type Server struct {
-	Address string
+	Address *string
 }
 
 var nextId = 0
@@ -33,8 +33,9 @@ func resourceServerCreate(d *schema.ResourceData, m interface{}) error {
 	id := fmt.Sprintf("%d", nextId)
 	nextId += 1
 
+	address := d.Get("address").(string)
 	servers[id] = &Server{
-		Address: d.Get("address").(string),
+		Address: &address,
 	}
 	d.SetId(id)
 	return nil
@@ -42,7 +43,11 @@ func resourceServerCreate(d *schema.ResourceData, m interface{}) error {
 
 func resourceServerRead(d *schema.ResourceData, m interface{}) error {
 	if server, exist := servers[d.Id()]; exist {
-		d.Set("address", server.Address)
+		if server.Address != nil {
+			d.Set("address", server.Address)
+		} else {
+			d.Set("address", nil)
+		}
 	} else {
 		d.SetId("")
 	}
@@ -51,7 +56,8 @@ func resourceServerRead(d *schema.ResourceData, m interface{}) error {
 
 func resourceServerUpdate(d *schema.ResourceData, m interface{}) error {
 	if server, exist := servers[d.Id()]; exist {
-		server.Address = d.Get("address").(string)
+		address := d.Get("address").(string)
+		server.Address = &address
 	} else {
 		d.SetId("")
 	}
