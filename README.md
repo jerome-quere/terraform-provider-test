@@ -1,18 +1,11 @@
 # Terraform provider test
 
-This repo aim to trigger a warning i should not get on terraform 0.12.1.
-
+This repo aim to trigger an issue when StateFunc in used on a property inside a Set.
 ### Step to reproduce
 ```
 env TF_ACC=1 TF_LOG=WARN go test -v ./test
 ```
 
-Warning that I get
-```
-2019/06/11 20:53:13 [WARN] Provider "test" produced an unexpected new value for test_server.base, but we are tolerating it because it is using the legacy plugin SDK.
-    The following problems may be the cause of any confusing errors from downstream operations:
-      - .address: was null, but now cty.StringVal("")
-
-```
+The If statement phone_book.go:70 is trigger but it should not.
 
 
